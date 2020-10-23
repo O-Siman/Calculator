@@ -8,8 +8,10 @@ import javax.security.auth.login.LoginException;
 
 public class Main extends ListenerAdapter {
     public static void main(String[] args) throws LoginException, InterruptedException {
+        String token = ReadToken.loadToken();
+
         JDA api = JDABuilder
-                .createDefault("NzY4ODYxNzQ5ODcyOTUxMjk2.X5GoTQ.rHjhIqfXx3bASWu3JQDiG5UInfU")
+                .createDefault(token)
                 .build();
         api.addEventListener(new Main());
         api.awaitReady();
