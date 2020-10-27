@@ -7,10 +7,16 @@ import org.jetbrains.annotations.NotNull;
 import javax.security.auth.login.LoginException;
 
 public class Main extends ListenerAdapter {
-    public static void main(String[] args) throws LoginException, InterruptedException {
+    public static void main(String[] args) {
+        new GUI();
+
+    }
+
+    public static JDA api;
+    public static void startBot() throws LoginException, InterruptedException {
         String token = ReadToken.loadToken();
 
-        JDA api = JDABuilder
+        api = JDABuilder
                 .createDefault(token)
                 .build();
         api.addEventListener(new Main());
