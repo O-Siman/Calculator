@@ -19,8 +19,10 @@ public class Main extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        //If the user running the command is a bot, return
         if (event.getAuthor().isBot())
             return;
+        //Set message content to a variable
         String message = event.getMessage().getContentRaw();
 
         switch (message) {
