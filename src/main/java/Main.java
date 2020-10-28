@@ -7,20 +7,32 @@ import org.jetbrains.annotations.NotNull;
 import javax.security.auth.login.LoginException;
 
 public class Main extends ListenerAdapter {
-    public static void main(String[] args) {
-        new GUI();
-
-    }
 
     public static JDA api;
-    public static void startBot() throws LoginException, InterruptedException {
-        String token = ReadToken.loadToken();
+    public static String token;
 
-        api = JDABuilder
-                .createDefault(token)
-                .build();
+    public static void main(String[] args) {
+        new GUI();
+        token = ReadToken.loadToken();
+    }
+
+
+
+    public static boolean startBot() throws InterruptedException {
+
+        JDABuilder preBuild = JDABuilder.createDefault(token);
+        try {
+            api = preBuild.build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            GUI.label.setText("Couldn't login to Discord.");
+            System.out.println("Resetting GUI");
+            GUI.resetGUI();
+            return false;
+        }
         api.addEventListener(new Main());
         api.awaitReady();
+        return true;
     }
 
     @Override

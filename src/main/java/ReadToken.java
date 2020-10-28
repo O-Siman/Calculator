@@ -11,7 +11,9 @@ public class ReadToken {
             return s.nextLine();
         } catch (Exception e) {
             e.printStackTrace();
+            GUI.label.setText("Couldn't read token.");
+            GUI.resetGUI();
+            return "Couldn't read token";
         }
-        return "Couldn't read token";
     }
 }
