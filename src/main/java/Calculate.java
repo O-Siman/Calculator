@@ -1,21 +1,10 @@
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Calculate {
-    public static void calculate(GuildMessageReceivedEvent event) {
-        //Set message content to a variable
-        String message = event.getMessage().getContentRaw();
-        TextChannel channel = event.getChannel();
-
-        //Remove the ` prefix
-        message = message.substring(1);
-
+    public static void calculate(String message) {
         //Makes sure that no letters or special characters are used
         if (!message.matches("^[1234567890*x+\\-\\/.\\s]+$")) {
-            channel.sendMessage("**Invalid Syntax:** A calculation can only include numbers and operations (`+`, `-`, `*` or `x`, `/`).").queue();
+            System.out.println("**Invalid Syntax:** A calculation can only include numbers and operations (`+`, `-`, `*` or `x`, `/`).");
             return;
         }
 
@@ -44,7 +33,7 @@ public class Calculate {
             if (i == 0) {
                 //And if the character is not a number
                 if (!currentChar.toString().matches("[1234567890.]")) {
-                    channel.sendMessage("**Invalid syntax:** Your calculation must start with a number.").queue();
+                    System.out.println("**Invalid syntax:** Your calculation must start with a number.");
                     return;
                 }
             }
@@ -53,7 +42,7 @@ public class Calculate {
             if (currentChar.toString().matches("[\\/*\\-+x]")) {
                 //If this is the second operation in a row
                 if (previousCharIsOperation) {
-                    channel.sendMessage("**Invalid syntax:** You can't have two operations in a row!").queue();
+                    System.out.println("**Invalid syntax:** You can't have two operations in a row!");
                     return;
                 }
                 //Only reaches here if it is a valid operation
@@ -85,7 +74,7 @@ public class Calculate {
             listOfNumbers.add(Double.parseDouble(currentNumber));
         } catch (Exception e) {
             //If there too many operations vs numbers (such as in example: 8 + 2 - 3 *)
-            channel.sendMessage("**Invalid Syntax:** You have too many operations.").queue();
+            System.out.println("**Invalid Syntax:** You have too many operations.");
             return;
         }
 
@@ -93,14 +82,14 @@ public class Calculate {
 //        currentNumber = "";
 /*
 
-        channel.sendMessage("List of all numbers in this equation:").queue();
+        System.out.println("List of all numbers in this equation:");
         for (int i = 0; i < listOfNumbers.size(); i++) {
-            channel.sendMessage(listOfNumbers.get(i).toString()).queue();
+            System.out.println(listOfNumbers.get(i).toString());
         }
 
-        channel.sendMessage("List of all operations in this equation:").queue();
+        System.out.println("List of all operations in this equation:");
         for (int i = 0; i < listOfOperations.size(); i++) {
-            channel.sendMessage(listOfOperations.get(i).toString()).queue();
+            System.out.println(listOfOperations.get(i).toString());
         }
 */
 
@@ -150,7 +139,7 @@ public class Calculate {
                 //Division, so we must make sure you don't divide by 0
                 case 3: {
                     if (secondNumber == 0) {
-                        channel.sendMessage("**Invalid Calculation:** Expression involved dividing by zero").queue();
+                        System.out.println("**Invalid Calculation:** Expression involved dividing by zero");
                         return;
                     }
                     result = firstNumber / secondNumber;
@@ -161,7 +150,7 @@ public class Calculate {
             firstNumber = result;
         }
 
-        channel.sendMessage("Result: **" + firstNumber + "**").queue();
+        System.out.println("Result: **" + firstNumber + "**");
 //        System.out.println("Result is " + firstNumber);
     }
 }
