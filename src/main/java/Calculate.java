@@ -4,7 +4,7 @@ public class Calculate {
     public static void calculate(String message) {
         // Makes sure that no letters or special characters are used
         if (!message.matches("^[1234567890*x+\\-\\/r.\\s]+$")) {
-            System.err.println("Invalid syntax: A calculation can only include numbers and operations (+, -, * or x, /, r).");
+            System.err.println("\u001B[31mInvalid syntax\u001B[0m: A calculation can only include numbers and operations (+, -, * or x, /, r).");
             return;
         }
 
@@ -12,6 +12,11 @@ public class Calculate {
         message = message.replaceAll("\\s", "");
 
         ArrayList<ArrayList> parsed = MessageParser.parseCalculation(message);
+        // If there was an error in parsing, we'll get null
+        if (parsed == null) {
+            // It already output error message, so just ask for next calculation
+            return;
+        }
         // Numbers is first, then operations
         // List of all numbers in the operation
         ArrayList<Double> listOfNumbers = parsed.get(0);
@@ -68,7 +73,7 @@ public class Calculate {
                 //Division, so we must make sure you don't divide by 0
                 case 3: {
                     if (secondNumber == 0) {
-                        System.err.println("Invalid Calculation: Expression involved dividing by zero");
+                        System.err.println("\u001B[31mInvalid calculation\u001B[0m: Expression involved dividing by zero");
                         return;
                     }
                     result = firstNumber / secondNumber;
@@ -79,7 +84,7 @@ public class Calculate {
             firstNumber = result;
         }
 
-        System.out.println("Result: " + firstNumber);
+        System.out.println("Result: \u001B[1m" + firstNumber + "\u001B[0m");
 //        System.out.println("Result is " + firstNumber);
     }
 }

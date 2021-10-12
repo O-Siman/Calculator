@@ -26,8 +26,8 @@ public class MessageParser {
             if (i == 0) {
                 //And if the character is not a number
                 if (!currentChar.toString().matches("[1234567890.]")) {
-                    System.err.println("Invalid syntax: Your calculation must start with a number.");
-                    System.exit(1);
+                    System.err.println("\u001B[31mInvalid syntax\u001B[0m: Your calculation must start with a number.");
+                    return null;
                 }
             }
 
@@ -44,8 +44,8 @@ public class MessageParser {
                     // Request next character to be operation
                     operationMandatory = true;
                 } catch (NumberFormatException e) {
-                    System.err.println("Invalid syntax: You must square root a number!");
-                    System.exit(1);
+                    System.err.println("\u001B[31mInvalid syntax\u001B[0m: You must square root a number!");
+                    return null;
                 }
 
                 continue;
@@ -55,8 +55,8 @@ public class MessageParser {
             if (currentChar.toString().matches("[\\/*\\-+x]")) {
                 // If this is the second operation in a row
                 if (previousCharIsOperation) {
-                    System.err.println("Invalid syntax: You can't have two operations in a row!");
-                    System.exit(1);
+                    System.err.println("\u001B[31mInvalid syntax\u001B[0m: You can't have two operations in a row!");
+                    return null;
                 }
                 // Only reaches here if it is a valid operation
 
@@ -77,8 +77,8 @@ public class MessageParser {
             }
 
             if (operationMandatory) {
-                System.err.println("Invalid syntax: You must perform an operation after a square root!");
-                System.exit(1);
+                System.err.println("\u001B[31mInvalid syntax\u001B[0m: You must perform an operation after a square root!");
+                return null;
             }
 
             // Mark as false, because this char is a number
@@ -94,8 +94,8 @@ public class MessageParser {
             listOfNumbers.add(Double.parseDouble(currentNumber.toString()));
         } catch (NumberFormatException e) {
             // If there are too many operations vs numbers (such as in: 8 + 2 - 3 *)
-            System.err.println("Invalid syntax: You have too many operations.");
-            System.exit(1);
+            System.err.println("\u001B[31mInvalid syntax\u001B[0m: You have too many operations.");
+            return null;
         }
 
         ArrayList<ArrayList> toReturn = new ArrayList<>();
